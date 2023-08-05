@@ -1,26 +1,30 @@
 from datetime import datetime
 
-from sqlalchemy import MetaData, Table, Column, Integer, String, TIMESTAMP, ForeignKey, JSON
+from sqlalchemy import MetaData, Table, Column, Integer, String, TIMESTAMP, ForeignKey, JSON, Boolean
+from sqlalchemy.orm import mapped_column
 
 metadata = MetaData()
 
-roles = Table(
-    "roles",
+role = Table(
+    "role",
     metadata,
     Column("id", Integer, primary_key=True),
     Column("name", String, nullable=False),
     Column("permissions", JSON),
 )
 
-users = Table(
-    "users",
+user = Table(
+    "user",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("email", String, nullable=False),
     Column("username", String, nullable=False),
-    Column("password", String, nullable=False),
     Column("register_at", TIMESTAMP, default=datetime.utcnow),
-    Column("role_id", Integer, ForeignKey("roles.id")),
+    Column("role_id", Integer, ForeignKey(role.c.id)),
+    Column("email", String(length=320), unique=True, index=True, nullable=False),
+    Column("hashed_password", String(length=1024), nullable=False),
+    Column("is_active", Boolean, default=True, nullable=False),
+    Column("is_superuser", Boolean, default=False, nullable=False),
+    Column("is_verified", Boolean, default=False, nullable=False),
 )
 
 # alembic init migrations
