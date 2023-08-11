@@ -19,7 +19,6 @@ async def get_long_op():
     return "Many many data"
 
 
-
 @router.get("/")
 async def get_specific_operations(operation_type: str, session: AsyncSession = Depends(get_async_session)):
     query = select(operation).where(operation.c.type == operation_type)

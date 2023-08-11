@@ -6,6 +6,7 @@ from .auth.base_config import auth_backend, fastapi_users
 from .auth.schemas import UserRead, UserCreate
 
 from .operations.router import router as router_operation
+from .tasks.router import router as router_tasks
 
 from redis import asyncio as aioredis
 
@@ -31,6 +32,12 @@ app.include_router(
     tags=["Operation"]
 )
 
+
+app.include_router(
+    router_tasks,
+    prefix="/tasks",
+    tags=["Router Tasks"]
+)
 
 @app.on_event("startup")
 async def startup():
