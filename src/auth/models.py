@@ -6,8 +6,7 @@ from sqlalchemy import Table, Column, Integer, String, TIMESTAMP, ForeignKey, JS
 from ..database import Base
 from sqlalchemy.orm import Mapped, mapped_column
 
-
-metadata = MetaData()
+from ..database import metadata
 
 role = Table(
     "role",
