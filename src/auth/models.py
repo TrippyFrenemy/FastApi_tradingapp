@@ -16,22 +16,10 @@ role = Table(
     Column("permissions", JSON),
 )
 
-user = Table(
-    "user",
-    metadata,
-    Column("id", Integer, primary_key=True),
-    Column("username", String, nullable=False),
-    Column("register_at", TIMESTAMP, default=datetime.utcnow),
-    Column("role_id", Integer, ForeignKey(role.c.id)),
-    Column("email", String(length=320), unique=True, index=True, nullable=False),
-    Column("hashed_password", String(length=1024), nullable=False),
-    Column("is_active", Boolean, default=True, nullable=False),
-    Column("is_superuser", Boolean, default=False, nullable=False),
-    Column("is_verified", Boolean, default=False, nullable=False),
-)
-
 
 class User(SQLAlchemyBaseUserTable[int], Base):
+    __tablename__ = "user"
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String(length=320), unique=True, index=True, nullable=False)
     register_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
