@@ -26,7 +26,7 @@ async def get_specific_operations(operation_type: str, session: AsyncSession = D
         result = await session.execute(query)
         return {
             "status": "success",
-            "data": result.scalars().all(),
+            "data": result.all(),
             "details": None
         }
     except:

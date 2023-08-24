@@ -22,7 +22,7 @@ celery -A src.tasks.tasks:celery flower
 ```
 The start of the app
 ```bash
-uvicorn main:app --reload
+uvicorn src.main:app --reload
 ```
 
 
